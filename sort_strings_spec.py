@@ -23,6 +23,16 @@ class TestSortStrings(unittest.TestCase):
     sorted_dates = ['1992-05-06', '2010-01-08', '2016-08-01', '2017-01-01']
     self.assertEqual(sort_strings.sortStrings(dates), sorted_dates)
 
+  def test_strings(self):
+    strings = ['zbc', 'AbA', 'abc', 'xyz', 'LMNoP']
+    sorted_strings = ['AbA', 'abc', 'LMNoP', 'xyz', 'zbc']
+    self.assertEqual(sort_strings.sortStrings(strings), sorted_strings)
+
+  def test_phone_numbers(self):
+    phone_numbers = ['512-513-4400', '512-512-4400', '512-513-3000']
+    sorted_phone_numbers = ['512-512-4400', '512-513-3000', '512-513-4400']
+    self.assertEqual(sort_strings.sortStrings(phone_numbers), sorted_phone_numbers)
+
 if __name__ == '__main__':
   unittest.main()
 
