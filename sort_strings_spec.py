@@ -53,6 +53,22 @@ class TestSortStrings(unittest.TestCase):
                         './system/kernel/js/02_my.desktop.js']
     self.assertEqual(sort_strings.sortStrings(filepaths), sorted_filepaths)
 
+  def test_file_paths_2(self):
+    filepaths = ['./system/kernel/js/01_ui.core.js', './system/kernel/js/00_jquery-1.3.2.js',
+                 './system/kernel/js/02_my.desktop.js', './system/kernel/my.desktop.js',
+                 './system/kernel/1_my.desktop.js', './system/kernel/11_my.desktop.js',
+                 './system/kernel/2_my.desktop.js',]
+    sorted_filepaths = ['./system/kernel/1_my.desktop.js', './system/kernel/2_my.desktop.js',
+                        './system/kernel/11_my.desktop.js', './system/kernel/my.desktop.js',
+                        './system/kernel/js/00_jquery-1.3.2.js', './system/kernel/js/01_ui.core.js',
+                        './system/kernel/js/02_my.desktop.js']
+    self.assertEqual(sort_strings.sortStrings(filepaths), sorted_filepaths)
+
+  def test_file_names(self):
+    filenames = ['car.mov', '01alpha.sgi', '001alpha.sgi', 'my.string_41299.tif', 'organic2.0001.sgi']
+    sorted_filenames = ['01alpha.sgi', '001alpha.sgi', 'car.mov', 'my.string_41299.tif', 'organic2.0001.sgi']
+    self.assertEqual(sort_strings.sortStrings(filenames), sorted_filenames)
+
   def test_alphanumeric(self):
     alpha_nums = ['img12.png', 'img10.png', 'img2.png', 'img1.png']
     sorted_alpha_nums = ['img1.png', 'img2.png', 'img10.png', 'img12.png']
@@ -95,6 +111,10 @@ class TestSortStrings(unittest.TestCase):
     sorted_mixed_bag = ['01','02','2','3']
     self.assertEqual(sort_strings.sortStrings(mixed_bag), sorted_mixed_bag)
 
+  def test_mixed_bag_3(self):
+    mixed_bag = ['alpha', ' 1', '  3', ' 2', '0']
+    sorted_mixed_bag = ['0', ' 1', ' 2', '  3', 'alpha']
+    self.assertEqual(sort_strings.sortStrings(mixed_bag), sorted_mixed_bag)
 
 if __name__ == '__main__':
   unittest.main()

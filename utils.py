@@ -7,7 +7,11 @@ date_re = re.compile(r"^\d{4}[-/]\d{2}[-/]\d{2}$")
 phone_number_re = re.compile(r'^(\d{3})-(\d{3})-(\d{4})$')
 ip_address_re = re.compile(r"\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b")
 file_path_re = re.compile(r"^[.]?(/[^/ ]*)+/?$")
-version_re = re.compile(r"(\d+\.)?(\d+\.)?(\*|\d+)")
+version_re = re.compile(r"(\d+\.)?(\d+\.)?(\*|\d+)\b")
+
+def is_digit(str):
+  return re.compile(num_re).match(str)
+
 
 def get_type(str_a):
 
@@ -35,8 +39,9 @@ def get_type(str_a):
   return 'alphanum'
 
 def get_cmp_file_path(str):
-  file_parts = str.split('/')
-  return (len(file_parts),) + tuple(file_parts)
+  file_parts = [int(x) if is_digit(x) else x for x in filter(None, re.split(r'/|(\d+)', str))]
+  print file_parts
+  return (len(str.split('/')),) + tuple(file_parts)
 
 def get_cmp_date(str):
   return (datetime.datetime.strptime(str, '%Y-%m-%d') -
