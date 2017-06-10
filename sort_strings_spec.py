@@ -1,7 +1,6 @@
 import unittest
 import sort_strings
 
-
 class TestSortStrings(unittest.TestCase):
   def test_numbers(self):
     numbers = ['1', '13', '2', '-13', '-1.1', '+1', '.2', '-21']
@@ -9,7 +8,7 @@ class TestSortStrings(unittest.TestCase):
     self.assertEqual(sort_strings.sortStrings(numbers), sorted_numbers)
 
   def test_scientific_notation_numbers(self):
-    numbers = ['1', '11e99', '2e99' ,'2', '-2.23E+45', '-13', '0.1e-456', '+1', '.2', '-21']
+    numbers = ['1','11e99', '2e99','2', '-2.23E+45', '-13', '0.1e-456', '+1', '.2', '-21']
     sorted_numbers = ['-2.23E+45', '-21', '-13', '0.1e-456', '.2', '1', '+1', '2', '2e99', '11e99']
     self.assertEqual(sort_strings.sortStrings(numbers), sorted_numbers)
 
@@ -53,6 +52,18 @@ class TestSortStrings(unittest.TestCase):
     alpha_nums = ['img12.png', 'img10.png', 'img2.png', 'img1.png']
     sorted_alpha_nums = ['img1.png', 'img2.png', 'img10.png', 'img12.png']
     self.assertEqual(sort_strings.sortStrings(alpha_nums), sorted_alpha_nums)
+
+  def test_version(self):
+    versions = ['1.0.2','1.0.1','1.0.0','1.0.9']
+    sorted_versions = ['1.0.0','1.0.1','1.0.2','1.0.9']
+    self.assertEqual(sort_strings.sortStrings(versions), sorted_versions)
+
+  def test_version_with_text(self):
+    version_with_text = ['myrelease-1.1.3', 'myrelease-1.2.3', 'myrelease-1.1.4',
+                         'myrelease-1.1.1', 'myrelease-1.0.5']
+    sorted_version_with_text = ['myrelease-1.0.5', 'myrelease-1.1.1', 'myrelease-1.1.3',
+                                'myrelease-1.1.4', 'myrelease-1.2.3']
+    self.assertEqual(sort_strings.sortStrings(version_with_text), sorted_version_with_text)
 
 if __name__ == '__main__':
   unittest.main()

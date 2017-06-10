@@ -9,6 +9,7 @@ date_re = re.compile(r"^\d{4}[-/]\d{2}[-/]\d{2}$")
 phone_number_re = re.compile(r'^(\d{3})-(\d{3})-(\d{4})$')
 ip_address_re = re.compile(r"\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b")
 file_path_re = re.compile(r"^[.]?(/[^/ ]*)+/?$")
+version_re = re.compile(r"(\d+\.)?(\d+\.)?(\*|\d+)")
 
 def regex_chooser(str_a):
 
@@ -40,16 +41,18 @@ def regex_chooser(str_a):
     ret_a['type'] = 'number'
     ret_a['comp_value'] = float(str_a)
 
+  elif version_re.match(str_a):
+    ret_a['type'] = 'version'
+    ret_a['comp_value'] = tuple([int(x) for x in str_a.split('.')])
+
   else:
     ret_a['type'] = 'alphanum'
     convert = lambda s: float(s) if num_re.match(s) else s
     ret_a['comp_value'] = tuple([convert(c) for c in re.split('([0-9]+)', str_a.lower())])
-    print ret_a
 
   return ret_a
 
 def sortStrings(strings):
   typed_strings = [regex_chooser(i) for i in strings]
-  print typed_strings
   sorted_strings = sorted(typed_strings, key=lambda x: (x['type'], x['comp_value']))
   return [x['value'] for x in sorted_strings]
