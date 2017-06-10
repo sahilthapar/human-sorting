@@ -55,7 +55,7 @@ def get_cmp_number(str):
   return float(str)
 
 def get_cmp_version(str):
-  return tuple([int(x) for x in str.split('.')])
+  return tuple([int(x) if re.compile(r'[0-9]+]').match(x) else x for x in str.split('.')])
 
 def get_cmp_alphanum(str):
   convert = lambda s: float(s) if num_re.match(s) else s
