@@ -1,22 +1,37 @@
 import re
 import datetime
 
+# Most of the regex have been sourced from stackoverflow
+
 num_re = re.compile(r"^[+-.]?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?$")
 money_re = re.compile(r"^\$\d+[.]?\d+$")
 date_re = re.compile(r"^\d{4}[-/]\d{2}[-/]\d{2}$")
 phone_number_re = re.compile(r'^(\d{3})-(\d{3})-(\d{4})$')
+ip_address_re = re.compile(r"\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b")
+file_path_re = re.compile(r"^[.]?(/[^/ ]*)+/?$")
 
 def regex_chooser(str_a):
 
   ret_a = {'value': str_a}
 
-  if date_re.match(str_a):
+  if file_path_re.match(str_a):
+    ret_a['type'] = 'file_path'
+    file_parts = str_a.split('/')
+    ret_a['comp_value'] = (len(file_parts), ) + tuple(file_parts)
+
+  elif date_re.match(str_a):
     ret_a['type'] = 'date'
-    ret_a['comp_value'] = (datetime.datetime.strptime(str_a, '%Y-%m-%d') - datetime.datetime.utcfromtimestamp(0)).total_seconds()
+    ret_a['comp_value'] = (datetime.datetime.strptime(str_a, '%Y-%m-%d') -
+                           datetime.datetime.utcfromtimestamp(0)).total_seconds()
 
   elif phone_number_re.match(str_a):
     ret_a['type'] = 'phone_number'
     ret_a['comp_value'] = phone_number_re.match(str_a).groups()
+
+
+  elif ip_address_re.match(str_a):
+    ret_a['type'] = 'ip_address'
+    ret_a['comp_value'] = tuple([int(x) for x in str_a.split('.')])
 
   elif money_re.match(str_a):
     ret_a['type'] = 'money'

@@ -33,6 +33,22 @@ class TestSortStrings(unittest.TestCase):
     sorted_phone_numbers = ['512-512-4400', '512-513-3000', '512-513-4400']
     self.assertEqual(sort_strings.sortStrings(phone_numbers), sorted_phone_numbers)
 
+  def test_ip_addresses(self):
+    ip_addresses = ['192.168.0.100', '192.168.0.1', '192.168.1.1', '192.168.102.250',
+                    '192.168.204.250', '192.168.2.123', '10.0.0.2', '10.0.0.1']
+    sorted_ip_addresses = ['10.0.0.1', '10.0.0.2', '192.168.0.1', '192.168.0.100',
+                            '192.168.1.1', '192.168.2.123', '192.168.102.250', '192.168.204.250']
+    self.assertEqual(sort_strings.sortStrings(ip_addresses), sorted_ip_addresses)
+
+  def test_file_paths(self):
+    filepaths = ['./system/kernel/js/01_ui.core.js', './system/kernel/js/00_jquery-1.3.2.js',
+                 './system/kernel/js/02_my.desktop.js', './system/kernel/my.desktop.js',
+                 './system/kernel/1_my.desktop.js']
+    sorted_filepaths = ['./system/kernel/1_my.desktop.js', './system/kernel/my.desktop.js',
+                        './system/kernel/js/00_jquery-1.3.2.js', './system/kernel/js/01_ui.core.js',
+                        './system/kernel/js/02_my.desktop.js']
+    self.assertEqual(sort_strings.sortStrings(filepaths), sorted_filepaths)
+
 if __name__ == '__main__':
   unittest.main()
 
