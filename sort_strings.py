@@ -13,7 +13,6 @@ file_path_re = re.compile(r"^[.]?(/[^/ ]*)+/?$")
 def regex_chooser(str_a):
 
   ret_a = {'value': str_a}
-
   if file_path_re.match(str_a):
     ret_a['type'] = 'file_path'
     file_parts = str_a.split('/')
@@ -42,12 +41,15 @@ def regex_chooser(str_a):
     ret_a['comp_value'] = float(str_a)
 
   else:
-    ret_a['type'] = 'letters'
-    ret_a['comp_value'] = str_a.lower()
+    ret_a['type'] = 'alphanum'
+    convert = lambda s: float(s) if num_re.match(s) else s
+    ret_a['comp_value'] = tuple([convert(c) for c in re.split('([0-9]+)', str_a.lower())])
+    print ret_a
 
   return ret_a
 
 def sortStrings(strings):
   typed_strings = [regex_chooser(i) for i in strings]
+  print typed_strings
   sorted_strings = sorted(typed_strings, key=lambda x: (x['type'], x['comp_value']))
   return [x['value'] for x in sorted_strings]

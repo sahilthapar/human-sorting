@@ -49,6 +49,11 @@ class TestSortStrings(unittest.TestCase):
                         './system/kernel/js/02_my.desktop.js']
     self.assertEqual(sort_strings.sortStrings(filepaths), sorted_filepaths)
 
+  def test_alphanumeric(self):
+    alpha_nums = ['img12.png', 'img10.png', 'img2.png', 'img1.png']
+    sorted_alpha_nums = ['img1.png', 'img2.png', 'img10.png', 'img12.png']
+    self.assertEqual(sort_strings.sortStrings(alpha_nums), sorted_alpha_nums)
+
 if __name__ == '__main__':
   unittest.main()
 
