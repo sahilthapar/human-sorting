@@ -1,9 +1,10 @@
-import datetime
+from dateutil.parser import parse as date_parse
 import re
+import calendar
 
 num_re = re.compile(r"^[+-.]?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?$")
 money_re = re.compile(r"^\$\d+[.]?\d+$")
-date_re = re.compile(r"^\d{4}[-/]\d{2}[-/]\d{2}$")
+date_re = re.compile(r"(\b\d{4}[-/]\d{1,2}[-/]\d{1,2}\b)|(\b\d{1,2}[-/]\d{1,2}[-/]\d{4}\b)")
 phone_number_re = re.compile(r'^(\d{3})-(\d{3})-(\d{4})$')
 ip_address_re = re.compile(r"\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b")
 file_path_re = re.compile(r"^[.]?(/[^/ ]*)+/?$")
@@ -12,28 +13,34 @@ version_re = re.compile(r"(\d+\.)?(\d+\.)?(\*|\d+)\b")
 def is_digit(str):
   return re.compile(num_re).match(str)
 
+def validate_date(str):
+  try:
+    date_parse(str)
+    return True
+  except ValueError:
+    return False
 
-def get_type(str_a):
+def get_type(str):
 
-  if file_path_re.match(str_a):
+  if file_path_re.match(str):
     return 'file_path'
 
-  elif date_re.match(str_a):
+  elif date_re.match(str) and validate_date(str):
     return 'date'
 
-  elif phone_number_re.match(str_a):
+  elif phone_number_re.match(str):
     return 'phone_number'
 
-  elif ip_address_re.match(str_a):
+  elif ip_address_re.match(str):
     return 'ip_address'
 
-  elif money_re.match(str_a):
+  elif money_re.match(str):
     return 'money'
 
-  elif num_re.match(str_a):
+  elif num_re.match(str):
     return 'number'
 
-  elif version_re.match(str_a):
+  elif version_re.match(str):
     return 'version'
 
   return 'alphanum'
@@ -43,8 +50,9 @@ def get_cmp_file_path(str):
   return (len(str.split('/')),) + tuple(file_parts)
 
 def get_cmp_date(str):
-  return (datetime.datetime.strptime(str, '%Y-%m-%d') -
-          datetime.datetime.utcfromtimestamp(0)).total_seconds()
+  dt = date_parse(str)
+  epoch = calendar.timegm(dt.timetuple())
+  return epoch
 
 def get_cmp_phone_number(str):
   return phone_number_re.match(str).groups()

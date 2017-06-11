@@ -22,10 +22,20 @@ class TestSortStrings(unittest.TestCase):
     sorted_dates = ['1992-05-06', '2010-01-08', '2016-08-01', '2017-01-01']
     self.assertEqual(sort_strings.sortStrings(dates), sorted_dates)
 
-  # def test_dates_2(self):
-  #   dates = ['01/01/2008', '01/10/2008', '01/01/1992', '01/01/1991']
-  #   sorted_dates = ['01/01/1991', '01/01/1992', '01/01/2008', '01/10/2008']
-  #   self.assertEqual(sort_strings.sortStrings(dates), sorted_dates)
+  def test_dates_2(self):
+    dates = ['2016-08-01', '2017-01-1', '2010-01-08', '1992-05-06', '2017-01-11', '2017-01-2']
+    sorted_dates = ['1992-05-06', '2010-01-08', '2016-08-01', '2017-01-1', '2017-01-2', '2017-01-11']
+    self.assertEqual(sort_strings.sortStrings(dates), sorted_dates)
+
+  def test_dates_3(self):
+    dates = ['10/31/2008', '31/8/2008', '01/01/1992', '01/01/1991', '11/01/1991', '2/01/1991']
+    sorted_dates = ['01/01/1991', '2/01/1991', '11/01/1991', '01/01/1992', '31/8/2008', '10/31/2008']
+    self.assertEqual(sort_strings.sortStrings(dates), sorted_dates)
+
+  def test_invalid_as_alphanums(self):
+    dates = ['10/31/2008', '31/8/2008', '01/01/1992', '01/01/1991', '11/01/1991', '2/01/1991', '31/31/1991']
+    sorted_dates = ['01/01/1991', '2/01/1991', '11/01/1991', '01/01/1992', '31/8/2008', '10/31/2008', '31/31/1991']
+    self.assertEqual(sort_strings.sortStrings(dates), sorted_dates)
 
   def test_strings(self):
     strings = ['zbc', 'AbA', 'abc', 'xyz', 'LMNoP']
@@ -73,6 +83,11 @@ class TestSortStrings(unittest.TestCase):
     alpha_nums = ['img12.png', 'img10.png', 'img2.png', 'img1.png']
     sorted_alpha_nums = ['img1.png', 'img2.png', 'img10.png', 'img12.png']
     self.assertEqual(sort_strings.sortStrings(alpha_nums), sorted_alpha_nums)
+
+  def test_alphanumeric_with_dates(self):
+    alpha_nums_date = ['img2014-10-10.png', 'img2014-02-02.png', 'img1992-06-05.png', 'img1992-01-10.png']
+    sorted_alpha_nums_date = ['img1992-01-10.png', 'img1992-06-05.png', 'img2014-02-02.png', 'img2014-10-10.png']
+    self.assertEqual(sort_strings.sortStrings(alpha_nums_date), sorted_alpha_nums_date)
 
   def test_version(self):
     versions = ['1.0.2','1.0.1','1.0.0','1.0.9']
