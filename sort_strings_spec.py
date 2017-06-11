@@ -113,7 +113,7 @@ class TestSortStrings(unittest.TestCase):
 
   def test_mixed_bag_3(self):
     mixed_bag = ['alpha', ' 1', '  3', ' 2', '0']
-    sorted_mixed_bag = ['0', ' 1', ' 2', '  3', 'alpha']
+    sorted_mixed_bag = ['alpha', '0', ' 1', ' 2', '  3']
     self.assertEqual(sort_strings.sortStrings(mixed_bag), sorted_mixed_bag)
 
 if __name__ == '__main__':

@@ -40,7 +40,6 @@ def get_type(str_a):
 
 def get_cmp_file_path(str):
   file_parts = [int(x) if is_digit(x) else x for x in filter(None, re.split(r'/|(\d+)', str))]
-  print file_parts
   return (len(str.split('/')),) + tuple(file_parts)
 
 def get_cmp_date(str):
@@ -60,7 +59,7 @@ def get_cmp_number(str):
   return float(str)
 
 def get_cmp_version(str):
-  return tuple([int(x) if re.compile(r'[0-9]+]').match(x) else x for x in str.split('.')])
+  return tuple([int(x) if re.compile(r'^[0-9]+$').match(x) else x for x in str.split('.')])
 
 def get_cmp_alphanum(str):
   convert = lambda s: float(s) if num_re.match(s) else s
