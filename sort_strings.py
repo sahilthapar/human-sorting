@@ -23,7 +23,7 @@ def add_type_compare_value(str):
     'comp_value': get_compare_value_getter(type)(str)
   }
 
-def sortStrings(strings):
+def sort_strings(strings):
   """
     Sorts a list of strings for human readable sorting
     :param strings: list of strings to be sorted 
