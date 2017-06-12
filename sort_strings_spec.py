@@ -1,6 +1,8 @@
 import unittest
 import sort_strings
 
+# Tests for edge cases
+
 class TestSortStrings(unittest.TestCase):
   def test_numbers(self):
     numbers = ['1', '13', '2', '-13', '-1.1', '+1', '.2', '-21']
