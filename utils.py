@@ -4,7 +4,7 @@ import calendar
 
 num_re = re.compile(r"^[+-.]?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?$")
 money_re = re.compile(r"^\$\d+[.]?\d+$")
-date_re = re.compile(r"(\b\d{4}[-/]\d{1,2}[-/]\d{1,2}\b)|(\b\d{1,2}[-/]\d{1,2}[-/]\d{4}\b)")
+date_re = re.compile(r"(\d{4}[-/]\d{1,2}[-/]\d{1,2})|(\d{1,2}[-/]\d{1,2}[-/]\d{4})")
 phone_number_re = re.compile(r'^(\d{3})-(\d{3})-(\d{4})$')
 ip_address_re = re.compile(r"\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b")
 file_path_re = re.compile(r"^[.]?(/[^/ ]*)+/?$")
@@ -14,18 +14,21 @@ def is_digit(str):
   return re.compile(num_re).match(str)
 
 def validate_date(str):
-  try:
-    date_parse(str)
-    return True
-  except ValueError:
-    return False
+  parts = filter(None, re.split(date_re, str))
+  for p in parts:
+    if date_re.match(p):
+      try:
+        date_parse(p)
+      except ValueError:
+        return False
+  return True
 
 def get_type(str):
 
   if file_path_re.match(str):
     return 'file_path'
 
-  elif date_re.match(str) and validate_date(str):
+  elif date_re.findall(str) and validate_date(str):
     return 'date'
 
   elif phone_number_re.match(str):
@@ -50,9 +53,9 @@ def get_cmp_file_path(str):
   return (len(str.split('/')),) + tuple(file_parts)
 
 def get_cmp_date(str):
-  dt = date_parse(str)
-  epoch = calendar.timegm(dt.timetuple())
-  return epoch
+  parts = filter(None, re.split(date_re, str))
+  comp_value = tuple([calendar.timegm(date_parse(p).timetuple()) if date_re.match(p) else p for p in parts])
+  return comp_value
 
 def get_cmp_phone_number(str):
   return phone_number_re.match(str).groups()

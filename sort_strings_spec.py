@@ -89,6 +89,11 @@ class TestSortStrings(unittest.TestCase):
     sorted_alpha_nums_date = ['img1992-01-10.png', 'img1992-06-05.png', 'img2014-02-02.png', 'img2014-10-10.png']
     self.assertEqual(sort_strings.sortStrings(alpha_nums_date), sorted_alpha_nums_date)
 
+  def test_alphanumeric_with_dates_2(self):
+    dates = ['img2016-08-01', 'img2017-01-1', 'img2010-01-08', 'xyz1992-05-06', 'img06-05-2017', 'img2017-01-2']
+    sorted_dates = ['img2010-01-08', 'img2016-08-01', 'img2017-01-1', 'img2017-01-2', 'img06-05-2017', 'xyz1992-05-06']
+    self.assertEqual(sort_strings.sortStrings(dates), sorted_dates)
+
   def test_version(self):
     versions = ['1.0.2','1.0.1','1.0.0','1.0.9']
     sorted_versions = ['1.0.0','1.0.1','1.0.2','1.0.9']
