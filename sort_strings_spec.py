@@ -138,6 +138,10 @@ class TestSortStrings(unittest.TestCase):
     sorted_mixed_bag = ['alpha', '0', ' 1', ' 2', '  3']
     self.assertEqual(sort_strings.sortStrings(mixed_bag), sorted_mixed_bag)
 
+  def test_empty(self):
+    empty = []
+    self.assertEqual(sort_strings.sortStrings(empty), empty)
+
 if __name__ == '__main__':
   unittest.main()
 
